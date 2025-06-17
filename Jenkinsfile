@@ -58,7 +58,7 @@ spec:
       steps {
         container(name: 'kaniko', shell: '/busybox/sh') {
           script {
-            def dest = "${REGISTRY}/${PROJECT}:latest"
+            def dest = "${env.REGISTRY}/${env.PROJECT}:latest"
             sh """
               echo "Building ${dest}"
               /kaniko/executor \
@@ -77,7 +77,7 @@ spec:
   post {
     always {
       script {
-        def dest = "${REGISTRY}/${IMAGE_NAME}:latest"
+        def dest = "${env.REGISTRY}/${env.IMAGE_NAME}:latest"
         echo "Finished build of ${dest}"
       }
     }
