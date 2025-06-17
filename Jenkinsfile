@@ -24,14 +24,14 @@ spec:
     command: ["sleep"]
     args: ["infinity"]
     volumeMounts:
-    - name: dockerhubconfig
+    - name: dockerconfig
       mountPath: /kaniko/.docker
     env:
     - name: HOME
       value: "/home/jenkins/agent"
   restartPolicy: Never
   volumes:
-  - name: docker-config
+  - name: dockerconfig
     projected:
       sources:
       - secret:
