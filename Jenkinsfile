@@ -80,7 +80,7 @@ spec:
   post {
     always {
       script {
-        def dest = "${env.REGISTRY}/${env.PROJECT}/$[env.IMAGE_NAME]:latest"
+        def dest = "${env.REGISTRY}/${env.PROJECT}/${env.IMAGE_NAME}:latest"
         echo "Finished build of ${dest}"
       }
     }
