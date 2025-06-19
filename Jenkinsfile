@@ -35,7 +35,7 @@ spec:
     projected:
       sources:
       - secret:
-          name: dockerhubconfig
+          name: harbor-dockerconfig
           items:
           - key: .dockerconfigjson
             path: config.json
@@ -44,8 +44,9 @@ spec:
   }
 
   environment {
-    REGISTRY   = "docker.io"
-    PROJECT    = "asdfkco/jenkinstest"
+    REGISTRY   = "harbor.nginx-apim.com"
+    PROJECT    = "jenkins-test"
+    IMAGE_NAME = "python-custom"
   }
 
   stages {
@@ -58,7 +59,7 @@ spec:
       steps {
         container(name: 'kaniko', shell: '/busybox/sh') {
           script {
-            def dest = "${env.REGISTRY}/${env.PROJECT}:latest"
+            def dest = "${env.REGISTRY}/${env.PROJECT}/$[env.IMAGE_NAME]:latest"
             sh """
               echo "Building ${dest}"
               /kaniko/executor \
@@ -66,6 +67,8 @@ spec:
                 --context=dir://./ \
                 --destination=${dest} \
                 --verbosity=debug \
+                --skip-tls-verify \
+                --insecure \
                 --cleanup
             """
           }
@@ -77,7 +80,7 @@ spec:
   post {
     always {
       script {
-        def dest = "${env.REGISTRY}/${env.IMAGE_NAME}:latest"
+        def dest = "${env.REGISTRY}/${env.PROJECT}/$[env.IMAGE_NAME]:latest"
         echo "Finished build of ${dest}"
       }
     }
