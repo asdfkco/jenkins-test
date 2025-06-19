@@ -10,6 +10,10 @@ metadata:
   labels:
     jenkins: kaniko-prod
 spec:
+  hostAliases:
+    - ip: "10.107.56.234"
+      hostnames:
+        - "harbor.nginx-apim.com"
   containers:
   - name: kaniko
     resources:
