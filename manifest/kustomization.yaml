@@ -5,6 +5,6 @@ namespace: default
 resources:
   - deployment.yaml
 images:
-  - name: asdfkco/jenkinstest
-    newName: asdfkco/jenkinstest
+  - name: registry-1.docker.io/asdfkco/jenkinstest
+    newName: registry-1.docker.io/asdfkco/jenkinstest
     newTag: latest
