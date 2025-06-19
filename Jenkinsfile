@@ -10,10 +10,6 @@ metadata:
   labels:
     jenkins: kaniko-prod
 spec:
-  hostAliases:
-    - ip: "10.107.56.234"
-      hostnames:
-        - "harbor.nginx-apim.com"
   containers:
   - name: kaniko
     resources:
@@ -39,7 +35,7 @@ spec:
     projected:
       sources:
       - secret:
-          name: harbor-dockerconfig
+          name: dockerconfig
           items:
           - key: .dockerconfigjson
             path: config.json
@@ -48,9 +44,8 @@ spec:
   }
 
   environment {
-    REGISTRY   = "harbor.nginx-apim.com"
-    PROJECT    = "jenkins-test"
-    IMAGE_NAME = "python-custom"
+    REGISTRY   = "docker.io"
+    PROJECT    = "asdfkco/jenkinstest"
   }
 
   stages {
@@ -63,7 +58,7 @@ spec:
       steps {
         container(name: 'kaniko', shell: '/busybox/sh') {
           script {
-            def dest = "${env.REGISTRY}/${env.PROJECT}/${env.IMAGE_NAME}:latest"
+            def dest = "${env.REGISTRY}/${env.PROJECT}:latest"
             sh """
               echo "Building ${dest}"
               /kaniko/executor \
@@ -71,8 +66,6 @@ spec:
                 --context=dir://./ \
                 --destination=${dest} \
                 --verbosity=debug \
-                --skip-tls-verify \
-                --insecure \
                 --cleanup
             """
           }
@@ -84,7 +77,7 @@ spec:
   post {
     always {
       script {
-        def dest = "${env.REGISTRY}/${env.PROJECT}/${env.IMAGE_NAME}:latest"
+            def dest = "${env.REGISTRY}/${env.PROJECT}:latest"
         echo "Finished build of ${dest}"
       }
     }
