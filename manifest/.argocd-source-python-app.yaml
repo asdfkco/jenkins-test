@@ -1,0 +1,3 @@
+kustomize:
+  images:
+  - registry-1.docker.io/asdfkco/jenkinstest:latest@sha256:3b4e9ad6d7bfb1f57783a89e1f88a6f45f53738c69011a2b134c0123de31fc1f
