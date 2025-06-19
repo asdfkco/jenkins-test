@@ -35,7 +35,7 @@ spec:
     projected:
       sources:
       - secret:
-          name: dockerconfig
+          name: dockerhubconfig
           items:
           - key: .dockerconfigjson
             path: config.json
