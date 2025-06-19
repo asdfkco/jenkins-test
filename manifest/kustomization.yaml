@@ -4,3 +4,7 @@ kind: Kustomization
 namespace: default
 resources:
   - deployment.yaml
+images:
+  - name: asdfkco/jenkinstest
+    newName: asdfkco/jenkinstest
+    newTag: latest
