@@ -54,7 +54,7 @@ spec:
         checkout scm
       }
     }
-    stage('Git depulicate check') {
+    stage('Build & Push') {
       when {
         beforeAgent true            // 에이전트 띄우기 전에 조건 확인
         not {                       // <─ 변경 집합이 ↓ 패턴에 *전부* 매치되면 false → stage skip
